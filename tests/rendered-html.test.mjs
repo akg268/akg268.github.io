@@ -35,6 +35,7 @@ test("server-renders the GitHub homepage shell", async () => {
   assert.match(html, /Backend systems, developer tools, and production feedback loops/i);
   assert.match(html, /Everyone tests in production/i);
   assert.match(html, /Search open issues/i);
+  assert.match(html, /unassigned issues no one has commented on/i);
   assert.match(html, /github\.com\/akg268/i);
   assert.doesNotMatch(html, new RegExp(["a", "i", "d", "l", "c"].join(""), "i"));
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
@@ -51,6 +52,8 @@ test("removes starter preview assets and metadata", async () => {
   assert.match(page, /const GITHUB_USER = "akg268"/);
   assert.match(page, /const EXCLUDED_REPO = new RegExp/);
   assert.match(page, /api\.github\.com\/search\/issues/);
+  assert.match(page, /comments:0/);
+  assert.match(page, /no:assignee/);
   assert.match(layout, /Arunkumar Ganesan \| GitHub Home/);
   assert.doesNotMatch(layout, /\/og\.png/);
   assert.match(css, /--accent:/);

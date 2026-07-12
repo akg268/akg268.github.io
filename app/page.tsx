@@ -37,6 +37,8 @@ type GitHubLabel = {
 };
 
 type GitHubIssue = {
+  assignee: { login: string } | null;
+  assignees?: { login: string }[];
   comments: number;
   created_at: string;
   html_url: string;
@@ -168,7 +170,7 @@ export default function Home() {
     "idle" | "loading" | "ready" | "error"
   >("idle");
   const [issueMessage, setIssueMessage] = useState(
-    "Search GitHub for contribution-ready issues.",
+    "Search GitHub for unassigned issues with no comments.",
   );
   const [issues, setIssues] = useState<GitHubIssue[]>([]);
 
@@ -288,7 +290,8 @@ export default function Home() {
     const cleanedQuery = issueQuery.trim() || "developer tools testing";
     const labelQualifier =
       issueLabel === "any" ? "" : `label:"${issueLabel}"`;
-    const query = `${cleanedQuery} is:issue is:open no:assignee archived:false ${labelQualifier}`.trim();
+    const query =
+      `${cleanedQuery} is:issue is:open no:assignee comments:0 archived:false ${labelQualifier}`.trim();
     const url = `https://api.github.com/search/issues?q=${encodeURIComponent(
       query,
     )}&sort=updated&order=desc&per_page=8`;
@@ -310,13 +313,21 @@ export default function Home() {
       }
 
       const data = (await response.json()) as IssueSearchResponse;
-      const filtered = data.items.filter((issue) => issue.html_url).slice(0, 8);
+      const filtered = data.items
+        .filter(
+          (issue) =>
+            issue.html_url &&
+            issue.comments === 0 &&
+            !issue.assignee &&
+            (!issue.assignees || issue.assignees.length === 0),
+        )
+        .slice(0, 8);
       setIssues(filtered);
       setIssueState("ready");
       setIssueMessage(
         filtered.length
-          ? `${data.total_count.toLocaleString("en-US")} open issues matched. Showing the freshest ${filtered.length}.`
-          : "No open issues matched that search. Try a broader phrase.",
+          ? `${data.total_count.toLocaleString("en-US")} untouched, unassigned issues matched. Showing ${filtered.length}.`
+          : "No unassigned issues with zero comments matched that search. Try a broader phrase.",
       );
     } catch (error) {
       setIssues([]);
@@ -528,12 +539,12 @@ export default function Home() {
       <section id="issues" className="issue-section">
         <div className="section-heading compact">
           <p className="eyebrow">Contribution search</p>
-          <h2>Find GitHub issues worth jumping into.</h2>
+          <h2>Find unassigned issues no one has commented on.</h2>
           <p>
-            Search for open issues across GitHub by theme, then open the
-            strongest matches directly. Try terms around tooling, testing,
-            Spring, observability, documentation, or whatever you want to
-            practice next.
+            Search for open issues across GitHub by theme, then open only the
+            untouched matches: no assignee and zero comments. Try terms around
+            tooling, testing, Spring, observability, documentation, or whatever
+            you want to practice next.
           </p>
         </div>
 
@@ -590,7 +601,7 @@ export default function Home() {
               </div>
               <div className="issue-card-footer">
                 <span>{formatDate(issue.updated_at)}</span>
-                <span>{issue.comments} comments</span>
+                <span>No comments</span>
                 <span>{issue.user.login}</span>
               </div>
               <div className="label-row">
