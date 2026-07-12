@@ -4,7 +4,7 @@ import "./globals.css";
 
 const title = "Arunkumar Ganesan | GitHub Home";
 const description =
-  "Projects, production-minded engineering notes, and contribution searches from Arunkumar Ganesan's GitHub workspace.";
+  "Public projects, backend systems notes, production testing, and contribution searches from Arunkumar Ganesan's GitHub workspace.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const headerList = await headers();
@@ -28,20 +28,11 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       url: origin,
       siteName: "Arunkumar Ganesan",
-      images: [
-        {
-          url: `${origin}/og.png`,
-          width: 1200,
-          height: 630,
-          alt: "Arunkumar Ganesan GitHub homepage preview",
-        },
-      ],
     },
     twitter: {
-      card: "summary_large_image",
+      card: "summary",
       title,
       description,
-      images: [`${origin}/og.png`],
     },
   };
 }

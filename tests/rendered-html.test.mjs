@@ -32,7 +32,7 @@ test("server-renders the GitHub homepage shell", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Arunkumar Ganesan \| GitHub Home<\/title>/i);
-  assert.match(html, /AI tools, backend systems, and testing loops/i);
+  assert.match(html, /Backend systems, developer tools, and production feedback loops/i);
   assert.match(html, /Everyone tests in production/i);
   assert.match(html, /Search open issues/i);
   assert.match(html, /github\.com\/akg268/i);
@@ -52,8 +52,8 @@ test("removes starter preview assets and metadata", async () => {
   assert.match(page, /const EXCLUDED_REPO = new RegExp/);
   assert.match(page, /api\.github\.com\/search\/issues/);
   assert.match(layout, /Arunkumar Ganesan \| GitHub Home/);
-  assert.match(layout, /\/og\.png/);
-  assert.match(css, /--teal:/);
+  assert.doesNotMatch(layout, /\/og\.png/);
+  assert.match(css, /--accent:/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.doesNotMatch(page, /SkeletonPreview|codex-preview/);
   assert.doesNotMatch(layout, /Starter Project|codex-preview|_sites-preview/);

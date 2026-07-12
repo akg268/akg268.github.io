@@ -56,24 +56,24 @@ type IssueSearchResponse = {
 
 const focusAreas = [
   {
-    eyebrow: "AI agent ergonomics",
-    title: "Prompt preflight before token burn",
-    body: "The recent work centers on local checks for vague AI-agent prompts, with hooks that turn ambiguous requests into tighter, cheaper, more useful runs.",
+    eyebrow: "Developer tooling",
+    title: "Prompt-preflight",
+    body: "Local hooks for catching vague agent prompts before they waste time or produce the wrong kind of work.",
   },
   {
-    eyebrow: "RAG and MCP labs",
-    title: "Small experiments with retrieval and tool context",
-    body: "LangChain, RAG, MCP, and SLM experiments show a hands-on track around grounding model output in the right data and tool calls.",
+    eyebrow: "Applied experiments",
+    title: "LangChain, RAG, and MCP",
+    body: "Small Python repos for testing retrieval, model context, tool boundaries, and practical integration patterns.",
   },
   {
-    eyebrow: "Java platform muscle",
-    title: "Spring, gRPC, Kafka, OAuth, and cloud patterns",
-    body: "The older repository trail reads like a backend systems workshop: Spring Boot, distributed tracing, gateways, messaging, auth, and service boundaries.",
+    eyebrow: "Backend systems",
+    title: "Spring, gRPC, Kafka, OAuth",
+    body: "A long-running Java/Spring trail around services, tracing, messaging, authentication, and platform reliability.",
   },
   {
     eyebrow: "Quality loop",
     title: "Everyone tests in production",
-    body: "The point is not chaos. The point is instrumentation, guardrails, flags, and fast learning loops so real behavior improves the next release.",
+    body: "The point is not chaos. It is observability, small rollouts, fast rollback, and turning real behavior into better tests.",
   },
 ];
 
@@ -103,7 +103,7 @@ const issueLabels = [
 ];
 
 const issuePrompts = [
-  "ai agent hooks prompt engineering",
+  "developer tools prompt validation",
   "langchain rag python documentation",
   "spring boot testing java",
   "observability tracing developer tools",
@@ -124,11 +124,11 @@ function repositoryName(issue: GitHubIssue) {
 function repoNarrative(repo: GitHubRepo) {
   const descriptions: Record<string, string> = {
     "prompt-preflight":
-      "Local AI-agent prompt checks that catch ambiguity before it burns tokens or sends an agent down the wrong path.",
+      "Local prompt checks that catch ambiguity before an agent spends time on the wrong work.",
     "langchain-rag":
       "A compact Python RAG lab for testing retrieval workflows and model-grounded answers.",
     mcp_slm_langchain:
-      "An exploration of MCP-style tool context with LangChain and smaller model workflows.",
+      "An exploration of MCP-style tool context with LangChain and smaller-model workflows.",
     langchain:
       "A LangChain sandbox for trying chains, prompts, and integration patterns.",
     springAI:
@@ -161,7 +161,7 @@ export default function Home() {
     "loading",
   );
   const [issueQuery, setIssueQuery] = useState(
-    "ai agent testing developer tools",
+    "developer tools testing observability",
   );
   const [issueLabel, setIssueLabel] = useState("good first issue");
   const [issueState, setIssueState] = useState<
@@ -346,14 +346,13 @@ export default function Home() {
         <div className="hero-copy">
           <p className="eyebrow">Arunkumar Ganesan / @akg268</p>
           <h1>
-            AI tools, backend systems, and testing loops that get better in the
-            real world.
+            Backend systems, developer tools, and production feedback loops.
           </h1>
           <p className="hero-lede">
-            I build practical engineering experiments across AI-agent workflow,
-            retrieval, MCP-style tooling, Java/Spring platforms, and production
-            feedback loops. The common thread is simple: make the work sharper
-            before it reaches users, then learn from what users teach it.
+            I use GitHub as a working notebook for practical software:
+            prompt-preflight tooling, RAG and MCP experiments, Java/Spring
+            systems, gRPC services, testing examples, and the kind of production
+            learning loop that makes the next release safer.
           </p>
           <div className="hero-actions">
             <a className="button primary" href="https://github.com/akg268">
@@ -365,8 +364,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-visual" aria-label="GitHub activity overview">
-          <div className="avatar-wrap">
+        <aside className="profile-panel" aria-label="GitHub profile summary">
+          <div className="profile-card">
             <img
               src={
                 profile?.avatar_url ??
@@ -374,29 +373,33 @@ export default function Home() {
               }
               alt="Arunkumar Ganesan GitHub avatar"
             />
+            <div>
+              <span className="profile-kicker">GitHub profile</span>
+              <h2>{profile?.name ?? "Arunkumar Ganesan"}</h2>
+              <p>{profile?.location ?? "USA"} / Available for useful work</p>
+            </div>
           </div>
-          <div className="signal-panel">
-            <div className="panel-row top">
-              <span>Prompt</span>
-              <strong>preflight</strong>
+
+          <div className="activity-card">
+            <div className="activity-card-header">
+              <span>Current thread</span>
+              <strong>public repos</strong>
             </div>
-            <div className="signal-lines" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-              <span />
-            </div>
-            <div className="repo-pulse-grid" aria-hidden="true">
-              {Array.from({ length: 18 }, (_, index) => (
-                <span key={index} className={`pulse pulse-${index % 6}`} />
+            <div className="activity-list">
+              {[
+                "prompt-preflight",
+                "langchain-rag",
+                "mcp_slm_langchain",
+                "springAI",
+                "GrpcService",
+              ].map((name) => (
+                <span key={name}>
+                  <code>{name}</code>
+                </span>
               ))}
             </div>
-            <div className="panel-row bottom">
-              <span>Production</span>
-              <strong>feedback loop</strong>
-            </div>
           </div>
-        </div>
+        </aside>
       </section>
 
       <section className="metric-strip" aria-label="GitHub profile statistics">
@@ -421,11 +424,13 @@ export default function Home() {
       <section id="projects" className="content-section">
         <div className="section-heading">
           <p className="eyebrow">Projects</p>
-          <h2>From AI-agent guardrails to Spring-era systems craft.</h2>
+          <h2>From prompt guardrails to Spring-era systems craft.</h2>
           <p>
-            The GitHub trail moves from Java backend fundamentals into modern AI
-            application experiments. Recent repositories lean into AI agent
-            productivity, prompt quality, RAG, LangChain, MCP, and Spring AI.
+            The GitHub trail moves from Java backend fundamentals into newer
+            tooling and model-context experiments. Recent repositories lean into
+            prompt quality, RAG, LangChain, MCP, and Spring application work
+            while older repos keep the Spring, Kafka, gateway, OAuth, and testing foundation
+            visible.
           </p>
         </div>
 
@@ -526,7 +531,7 @@ export default function Home() {
           <h2>Find GitHub issues worth jumping into.</h2>
           <p>
             Search for open issues across GitHub by theme, then open the
-            strongest matches directly. Try terms around AI tooling, testing,
+            strongest matches directly. Try terms around tooling, testing,
             Spring, observability, documentation, or whatever you want to
             practice next.
           </p>
@@ -538,7 +543,7 @@ export default function Home() {
             <input
               value={issueQuery}
               onChange={(event) => setIssueQuery(event.target.value)}
-              placeholder="AI agents, Spring testing, RAG docs"
+              placeholder="Spring testing, RAG docs, observability"
             />
           </label>
           <label>
@@ -600,7 +605,7 @@ export default function Home() {
 
       <footer className="site-footer">
         <span>
-          Built around public GitHub activity, practical AI experiments, and
+          Built around public GitHub activity, practical experiments, and
           production-minded software craft.
         </span>
         <a href="https://github.com/akg268">github.com/akg268</a>
