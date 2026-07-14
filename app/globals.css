@@ -105,6 +105,7 @@ button {
 .hero-section,
 .metric-strip,
 .section-grid,
+.feature-section,
 .content-section,
 .production-section,
 .issue-section,
@@ -213,6 +214,7 @@ h1 {
 .profile-card,
 .activity-card,
 .focus-card,
+.feature-card,
 .repo-card,
 .language-panel,
 .production-section,
@@ -344,8 +346,8 @@ code {
 .section-grid {
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  padding-bottom: 56px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  padding-bottom: 28px;
 }
 
 .focus-card {
@@ -368,6 +370,8 @@ code {
 }
 
 .focus-card span,
+.feature-copy p,
+.feature-card p,
 .section-heading p,
 .loop-step p,
 .repo-card p,
@@ -380,6 +384,50 @@ code {
 .content-section,
 .issue-section {
   padding-bottom: 64px;
+}
+
+.feature-section {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  padding-bottom: 64px;
+}
+
+.feature-copy {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+
+.feature-copy h2 {
+  font-size: clamp(1.75rem, 3vw, 2.45rem);
+  letter-spacing: 0;
+  line-height: 1.08;
+  margin-bottom: 14px;
+}
+
+.feature-copy p:last-child {
+  margin-bottom: 0;
+}
+
+.feature-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.feature-card {
+  padding: 18px;
+}
+
+.feature-card h3 {
+  font-size: 1.08rem;
+  letter-spacing: 0;
+  margin-bottom: 8px;
+}
+
+.feature-card p {
+  margin-bottom: 0;
 }
 
 .section-heading {
@@ -732,6 +780,7 @@ code {
 
 @media (max-width: 980px) {
   .hero-section,
+  .feature-section,
   .section-heading,
   .project-layout {
     grid-template-columns: 1fr;

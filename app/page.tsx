@@ -58,6 +58,11 @@ type IssueSearchResponse = {
 
 const focusAreas = [
   {
+    eyebrow: "AI dev enablement",
+    title: "Thule AI Dev Skills",
+    body: "A practical skills project for helping engineers use AI tools with better context, sharper prompts, stronger reviews, and safer delivery habits.",
+  },
+  {
     eyebrow: "Developer tooling",
     title: "Prompt-preflight",
     body: "Local hooks for catching vague agent prompts before they waste time or produce the wrong kind of work.",
@@ -84,6 +89,21 @@ const productionLoops = [
   ["Gate", "Use flags, canaries, and rollbacks so experiments have edges."],
   ["Learn", "Compare expectations against production behavior, then keep the useful surprises."],
   ["Patch", "Move what you learned into tests, hooks, runbooks, and safer defaults."],
+];
+
+const thuleSkills = [
+  [
+    "Skill map",
+    "Break AI-assisted development into teachable habits: framing the task, gathering repo context, asking for the right evidence, and knowing when to stop.",
+  ],
+  [
+    "Engineering loop",
+    "Pair agent speed with normal software discipline: tests, code review, small commits, clean handoff notes, and production-minded risk checks.",
+  ],
+  [
+    "Practice system",
+    "Turn everyday development work into repeatable exercises, examples, and rubrics that help engineers build judgment instead of just using a tool.",
+  ],
 ];
 
 const priorityRepos = [
@@ -361,9 +381,10 @@ export default function Home() {
           </h1>
           <p className="hero-lede">
             I use GitHub as a working notebook for practical software:
-            prompt-preflight tooling, RAG and MCP experiments, Java/Spring
-            systems, gRPC services, testing examples, and the kind of production
-            learning loop that makes the next release safer.
+            the Thule AI Dev Skills project, prompt-preflight tooling, RAG and
+            MCP experiments, Java/Spring systems, gRPC services, testing
+            examples, and the kind of production learning loop that makes the
+            next release safer.
           </p>
           <div className="hero-actions">
             <a className="button primary" href="https://github.com/akg268">
@@ -399,10 +420,10 @@ export default function Home() {
             <div className="activity-list">
               {[
                 "prompt-preflight",
+                "thule-ai-dev-skills",
                 "langchain-rag",
                 "mcp_slm_langchain",
                 "springAI",
-                "GrpcService",
               ].map((name) => (
                 <span key={name}>
                   <code>{name}</code>
@@ -432,16 +453,39 @@ export default function Home() {
         ))}
       </section>
 
+      <section className="feature-section" aria-labelledby="thule-heading">
+        <div className="feature-copy">
+          <p className="eyebrow">Featured project</p>
+          <h2 id="thule-heading">Thule AI Dev Skills</h2>
+          <p>
+            Thule AI Dev Skills is about making AI-assisted development feel
+            like a real engineering practice, not a shortcut. The project
+            focuses on the habits that make agents useful in production code:
+            clear task framing, grounded context, testable changes, useful
+            reviews, and honest handoffs.
+          </p>
+        </div>
+        <div className="feature-grid">
+          {thuleSkills.map(([title, body]) => (
+            <article className="feature-card" key={title}>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section id="projects" className="content-section">
         <div className="section-heading">
           <p className="eyebrow">Projects</p>
           <h2>From prompt guardrails to Spring-era systems craft.</h2>
           <p>
             The GitHub trail moves from Java backend fundamentals into newer
-            tooling and model-context experiments. Recent repositories lean into
-            prompt quality, RAG, LangChain, MCP, and Spring application work
-            while older repos keep the Spring, Kafka, gateway, OAuth, and testing foundation
-            visible.
+            tooling and model-context experiments. Thule AI Dev Skills connects
+            that work to engineering enablement, while recent repositories lean
+            into prompt quality, RAG, LangChain, MCP, and Spring application
+            work. Older repos keep the Spring, Kafka, gateway, OAuth, and
+            testing foundation visible.
           </p>
         </div>
 

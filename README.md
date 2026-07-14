@@ -5,6 +5,7 @@ A personal GitHub homepage for `akg268`.
 The page is intentionally simple and profile-focused:
 
 - highlights public repositories without including excluded projects
+- features the Thule AI Dev Skills project
 - keeps copy grounded in actual engineering work
 - includes a production-testing section
 - includes a GitHub issue search flow for contribution discovery

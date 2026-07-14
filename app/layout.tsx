@@ -3,7 +3,7 @@ import "./globals.css";
 
 const title = "Arunkumar Ganesan | GitHub Home";
 const description =
-  "Public projects, backend systems notes, production testing, and contribution searches from Arunkumar Ganesan's GitHub workspace.";
+  "Thule AI Dev Skills, public projects, backend systems notes, production testing, and contribution searches from Arunkumar Ganesan's GitHub workspace.";
 const url = "https://akg268.github.io";
 
 export const metadata: Metadata = {
