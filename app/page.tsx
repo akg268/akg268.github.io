@@ -58,26 +58,31 @@ type IssueSearchResponse = {
 
 const focusAreas = [
   {
+    tone: "teal",
     eyebrow: "AI dev enablement",
     title: "Thule AI Dev Skills",
     body: "A practical skills project for helping engineers use AI tools with better context, sharper prompts, stronger reviews, and safer delivery habits.",
   },
   {
+    tone: "blue",
     eyebrow: "Developer tooling",
     title: "Prompt-preflight",
     body: "Local hooks for catching vague agent prompts before they waste time or produce the wrong kind of work.",
   },
   {
+    tone: "violet",
     eyebrow: "Applied experiments",
     title: "LangChain, RAG, and MCP",
     body: "Small Python repos for testing retrieval, model context, tool boundaries, and practical integration patterns.",
   },
   {
+    tone: "green",
     eyebrow: "Backend systems",
     title: "Spring, gRPC, Kafka, OAuth",
     body: "A long-running Java/Spring trail around services, tracing, messaging, authentication, and platform reliability.",
   },
   {
+    tone: "amber",
     eyebrow: "Quality loop",
     title: "Everyone tests in production",
     body: "The point is not chaos. It is observability, small rollouts, fast rollback, and turning real behavior into better tests.",
@@ -92,21 +97,25 @@ const productionLoops = [
 ];
 
 const thuleSkills = [
-  [
-    "Skill map",
-    "Break AI-assisted development into teachable habits: framing the task, gathering repo context, asking for the right evidence, and knowing when to stop.",
-  ],
-  [
-    "Engineering loop",
-    "Pair agent speed with normal software discipline: tests, code review, small commits, clean handoff notes, and production-minded risk checks.",
-  ],
-  [
-    "Practice system",
-    "Turn everyday development work into repeatable exercises, examples, and rubrics that help engineers build judgment instead of just using a tool.",
-  ],
+  {
+    tone: "teal",
+    title: "Skill map",
+    body: "Break AI-assisted development into teachable habits: framing the task, gathering repo context, asking for the right evidence, and knowing when to stop.",
+  },
+  {
+    tone: "rose",
+    title: "Engineering loop",
+    body: "Pair agent speed with normal software discipline: tests, code review, small commits, clean handoff notes, and production-minded risk checks.",
+  },
+  {
+    tone: "blue",
+    title: "Practice system",
+    body: "Turn everyday development work into repeatable exercises, examples, and rubrics that help engineers build judgment instead of just using a tool.",
+  },
 ];
 
 const priorityRepos = [
+  "thule-ai-dev-skills",
   "prompt-preflight",
   "langchain-rag",
   "mcp_slm_langchain",
@@ -116,6 +125,31 @@ const priorityRepos = [
   "xssfilter",
   "java_workouts",
 ];
+
+const projectTones = [
+  "teal",
+  "blue",
+  "violet",
+  "green",
+  "amber",
+  "rose",
+  "cyan",
+  "slate",
+] as const;
+
+type ProjectTone = (typeof projectTones)[number];
+
+const repoToneByName: Record<string, ProjectTone> = {
+  "thule-ai-dev-skills": "teal",
+  "prompt-preflight": "blue",
+  "langchain-rag": "violet",
+  mcp_slm_langchain: "rose",
+  springAI: "green",
+  GrpcService: "cyan",
+  "boot2-with-junit5-sample": "amber",
+  xssfilter: "slate",
+  java_workouts: "green",
+};
 
 const issueLabels = [
   { label: "Good first issue", value: "good first issue" },
@@ -174,6 +208,10 @@ function repoNarrative(repo: GitHubRepo) {
 
 function hasExcludedText(repo: GitHubRepo) {
   return EXCLUDED_REPO.test(`${repo.name} ${repo.description ?? ""}`);
+}
+
+function projectTone(repo: GitHubRepo, index: number) {
+  return repoToneByName[repo.name] ?? projectTones[index % projectTones.length];
 }
 
 export default function Home() {
@@ -445,7 +483,7 @@ export default function Home() {
 
       <section className="section-grid">
         {focusAreas.map((area) => (
-          <article className="focus-card" key={area.title}>
+          <article className={`focus-card tone-${area.tone}`} key={area.title}>
             <p>{area.eyebrow}</p>
             <h2>{area.title}</h2>
             <span>{area.body}</span>
@@ -466,8 +504,8 @@ export default function Home() {
           </p>
         </div>
         <div className="feature-grid">
-          {thuleSkills.map(([title, body]) => (
-            <article className="feature-card" key={title}>
+          {thuleSkills.map(({ body, title, tone }) => (
+            <article className={`feature-card tone-${tone}`} key={title}>
               <h3>{title}</h3>
               <p>{body}</p>
             </article>
@@ -499,9 +537,9 @@ export default function Home() {
             )}
 
             {featuredRepos.length
-              ? featuredRepos.map((repo) => (
+              ? featuredRepos.map((repo, index) => (
                   <a
-                    className="repo-card"
+                    className={`repo-card tone-${projectTone(repo, index)}`}
                     href={repo.html_url}
                     key={repo.full_name}
                   >
@@ -517,7 +555,12 @@ export default function Home() {
                   </a>
                 ))
               : Array.from({ length: 4 }, (_, index) => (
-                  <div className="repo-card loading-card" key={index}>
+                  <div
+                    className={`repo-card tone-${
+                      projectTones[index % projectTones.length]
+                    } loading-card`}
+                    key={index}
+                  >
                     <span className="repo-meta">Loading GitHub</span>
                     <h3>Project signal</h3>
                     <p>Fetching public repositories from @akg268.</p>
