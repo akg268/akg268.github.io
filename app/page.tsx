@@ -437,10 +437,7 @@ export default function Home() {
         <aside className="profile-panel" aria-label="GitHub profile summary">
           <div className="profile-card">
             <img
-              src={
-                profile?.avatar_url ??
-                "https://avatars.githubusercontent.com/u/18699334?v=4"
-              }
+              src="/profile.png"
               alt="Arunkumar Ganesan GitHub avatar"
             />
             <div>

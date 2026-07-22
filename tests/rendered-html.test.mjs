@@ -35,6 +35,7 @@ test("server-renders the GitHub homepage shell", async () => {
   assert.match(html, /Backend systems, developer tools, and production feedback loops/i);
   assert.match(html, /Thule AI Dev Skills/i);
   assert.match(html, /AI-assisted development/i);
+  assert.match(html, /src="\/profile\.png"/i);
   assert.match(html, /Everyone tests in production/i);
   assert.match(html, /Search open issues/i);
   assert.match(html, /unassigned issues no one has commented on/i);
